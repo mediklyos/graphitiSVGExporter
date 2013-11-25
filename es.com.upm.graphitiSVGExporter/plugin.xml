@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+   <extension-point 
+   		id="configurationSVGElement"
+   		name="ConfigurationSVGElement"
+   		schema="schema/es.com.upm.graphiti.exporter.svgElement.exsd"/>
+
+ <extension point="org.eclipse.ui.exportWizards"> 
+     <wizard 
+          id="es.com.upm.SVGExporter"
+          name="SVG Export Wizard" 
+          class="es.com.upm.graphiti.export.wizard.SVGExportWizard"> 
+          <description> 
+              Create a simple XYZ artifact and set initial content 
+          </description> 
+          <selection class="org.eclipse.core.resources.IFile"/> 
+      </wizard> 
+   </extension> 
+   <extension
+         id="org.eclipse.graphiti.export.svg"
+         name="COM SVG Exporter"
+         point="org.eclipse.graphiti.ui.diagramExporters">
+      <diagramexporter
+            class="es.com.upm.graphiti.exporter.svg.GraphitiSVGExporter"
+            enableScaling="false"
+            type="SVGZ">
+      </diagramexporter>
+    </extension>  
+</plugin>
