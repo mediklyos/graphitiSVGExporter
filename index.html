@@ -1,0 +1,158 @@
+<html>
+<body>
+	<a href="http://www.centeropenmiddleware.com"><img src="images/customlogo.jpg" align="middle"></a>
+	<div align="center">
+		<h1>Graphiti SVG Exporter</h1>
+	</div>
+	<div align="center">
+		<h2>What is it?</h2>
+		<p align="justify">Graphiti SVG Exporter is an Eclipse plugin that has been developed inside COM (Center for Open Middleware). This Eclipse plugin generate a SVG DOM file from the Graphiti graphical metamodel using the ApacheTM Batik SVG Toolkit.</p>
+		<p align="justify">Graphiti is an Eclipse-based graphics framework that enables rapid development of state-of-the-art diagram editors for domain models. Graphiti can use EMF-based domain models very easily but can deal with any Java-based objects on the domain side as well.</p>
+		<p align="justify">Batik is a Java-based toolkit for applications or applets that want to use images in the Scalable Vector Graphics (SVG) format for various purposes, such as display, generation or manipulation.</p>
+	</div>
+	<div align="center">
+		<br><h2>Class Details</h2>
+		<p align="justify">The plugin is composed of the following Java Classes:</p>
+		<p align="justify"><i><b>DiagramGraphicsAdaptor</b>.java-.</i> This adaptor carries out the transformation of the Graphiti graphical Metamodel into AWT Java Graphics in order to being used by Apache Batik Toolkit to generate the SVG file.</p>
+		<p align="justify"><i><b>AwtService</b>.java-.</i> This service follows the architecture principles in Graphiti developing a service which make it easier to transform the Graphiti graphical metamodel.</p>
+		<p align="justify"><i><b>IConfigurationSVGElement</b>.java-.</i> This interface provide a new functionality placing hooks an managing the SVG DOM tree. On this way, It is possible to include some particular details which may not be in the model. There is a default implementation (<i><b>DefaultConfigurationSVGElement</b>.java</i>)</p>
+		<p align="justify"><i><b>GraphitiDOMGroupManager</b>.java-.</i> This class extends <i>DOMGroupManager</i> class which is used by the Graphics2D SVG Generator to manage a group of Nodes that can later be added to the SVG DOM Tree managed by the DOMTreeManager.</p>
+		<p align="justify"><i><b>GraphitiSVGExporter</b>.java-.</i> This class implements the <i>IDiagramsExporter</i> interface in Graphiti to export the content of a graphical viewer. It also initialize the SVG DOM document.</p>
+		<p align="justify"><i><b>GraphitiDiagramLoader</b>.java-.</i> This class is used by the GraphitiSVGExporte to obtain the Graphiti Diagram from a URI.</p>
+		<p align="justify"><i><b>SVGExportWizard</b>.java-.</i> This class implements the <i>FileSystemExportWizard</i> interface in Eclipse to export the resources from the workspace to the local file system.</p>
+	</div>
+	<div align="center">
+		<br><h2>How to use</h2>
+		<p align="justify">There are two options for exporting SVG via graphitiSVGExporter:</p>
+		<p align="justify">+ Export Wizard: It is possible to export a bunch of diagrams to SVG files by the option Export (Selects "SVG Export Wizard" on "Other") in the Workspace Contextual Menu</p>
+		<img src="images/ExportWizard.png" align="middle" width="452" height"=357"/>
+		<p align="justify">+ Image Save: It is possible to export to SVG File, an opened diagram </p>
+		<img src="images/ExportDiagram.png" align="middle"/>
+	</div>
+	<div align="center">
+		<br><h2>Solved Problems and Improvements</h2>
+		<p align="justify">There are some differences between the SVG exportation with GEF and this exportation (directly through the Graphiti MetaModel).</p><br>
+		<table cellspacing="0" border="1" cellpadding="0" width="100%">
+			<tr>
+				<td align="center" width="20%">Background Grid Layer</td>
+				<td width="80%">
+					<table cellspacing="0" cellpadding="5" border="1" width="100%">
+						<tr>
+							<td  width="25%"><b><i>graphiti SVG Exporter</i></b></td>
+							<td><p align="justify">The Background Grid is not in the model, but it's exported.</p></td>
+						</tr>
+						<tr></tr>
+						<tr>
+							<td><b><i> GEF </i></b></td>
+							<td><p align="justify">The Background Grid is not exported.</p></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td align="center">RoundedRectangle</td>
+				<td width="80%">
+					<table cellspacing="0" cellpadding="5" border="1" width="100%">
+						<tr>
+							<td width="25%"><b><i>graphiti SVG Exporter</i></b></td>
+							<td><p align="justify">It is duplicated (one for filling, another for border). Due to Apache Batik restriction (It can be improved).</p></td>
+						</tr>
+						<tr></tr>
+						<tr>
+							<td><b><i> GEF </i></b></td>
+							<td><p align="justify">It is converted into a SVG Path and a SVG rect.</p></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td align="center">Colors Styles</td>
+				<td width="80%">
+					<table cellspacing="0" cellpadding="5" border="1" width="100%">
+						<tr>
+							<td  width="25%"><b><i>graphiti SVG Exporter</i></b></td>
+							<td><p align="justify">In the Graphiti graphical metamodel a style can be defined in order to use a/some gradient Colors. Due to the several differences between SVG and Graphiti Metamodel, graphitiSVGExporter creates a SVG pattern that adjust to the Gradient Colored Areas created in Graphiti for the color Style. By Default, only one color can be used.</p></td>
+						</tr>
+						<tr></tr>
+						<tr>
+							<td><b><i> GEF </i></b></td>
+							<td><p align="justify">SVG Linear Gradients and SVG ClipPaths are created as much as Gradient Colored Areas are defined.</p></td>
+						</tr>
+						
+					</table>
+					<table border="1" width="100%">
+						<tr>
+							<td width="100%"  align="middle"><img src="images/exampleGradient.png" width="603" height"=255"/></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td align="center">Clip Path</td>
+				<td width="80%">
+					<table cellspacing="0" cellpadding="5" border="1" width="100%">
+						<tr>
+							<td  width="25%"><b><i>graphiti SVG Exporter</i></b></td>
+							<td><p align="justify">Coordinates System is based on SVG translation and SVG rotation (SVG Transformations).</p></td>
+						</tr>
+						<tr></tr>
+						<tr>
+							<td><b><i> GEF </i></b></td>
+							<td><p align="justify">SVG Clip Path are applied in every element in the svg File.</p></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td align="center">Model Modifications</td>
+				<td width="80%">
+					<table cellspacing="0" cellpadding="5" border="1" width="100%">
+						<tr>
+							<td  width="25%"><b><i>graphiti SVG Exporter</i></b></td>
+							<td><p align="justify">It had been added hook points where the programmer can configure the Graphiti model to be exported.</p></td>
+						</tr>
+						<tr></tr>
+						<tr>
+							<td><b><i> GEF </i></b></td>
+							<td><p align="justify">Diagram Editor must be open.</p></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td align="center">New SVG Elements</td>
+				<td width="80%">
+					<table cellspacing="0" cellpadding="5" border="1" width="100%">
+						<tr>
+							<td  width="25%"><b><i>graphiti SVG Exporter</i></b></td>
+							<td><p align="justify">And also other SVG features can be added in the same way. By default, the model element's name is added as Tooltip (svg Title).</p></td>
+						</tr>
+						<tr></tr>
+						<tr>
+							<td><b><i> GEF </i></b></td>
+							<td><p align="justify">SVG file is closed.</p></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td align="center">Graphiti 0.10.0 Elements</td>
+				<td width="80%">
+					<table cellspacing="0" cellpadding="5" border="1" width="100%">
+						<tr>
+							<td  width="25%"><b><i>graphiti SVG Exporter</i></b></td>
+							<td><p align="justify">TextStyleRegion (org.eclipse.graphiti.mm.algorithms.styles.TextStyleRegion) are exported but this development has detected some featured Bugs related with the different used font sizes (<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=412108">Bug 412108</a>) and underline Type (<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=412089">Bug 412089</a>).</p></td>
+						</tr>
+						<tr></tr>
+						<tr>
+							<td><b><i> GEF </i></b></td>
+							<td><p align="justify">Bugs have been detected.</p></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
+
