@@ -6,7 +6,7 @@
          <meta.schema plugin="GraphitiSVGExporter" id="configurationSVGElement" name="ConfigurationSVGElement"/>
       </appinfo>
       <documentation>
-         [Enter description of this extension point.]
+         This extension point allows to include particular in the DOM tree which aren&apos;t in the model.
       </documentation>
    </annotation>
 
@@ -52,7 +52,7 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  Java Class which implements IConfigurationSVGElement Interface.
                </documentation>
                <appinfo>
                   <meta.attribute kind="java" basedOn=":es.com.upm.graphiti.exporter.svg.IConfigurationSVGElement"/>
@@ -62,7 +62,7 @@
          <attribute name="diagramTypeID" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  Id for the Graphiti Diagram Identification.
                </documentation>
             </annotation>
          </attribute>
@@ -74,7 +74,7 @@
          <meta.section type="since"/>
       </appinfo>
       <documentation>
-         [Enter the first release in which this extension point appears.]
+         Version 0.0
       </documentation>
    </annotation>
 
@@ -83,27 +83,31 @@
          <meta.section type="examples"/>
       </appinfo>
       <documentation>
-         [Enter extension point usage example here.]
+         &lt;extension point=&quot;es.com.upm.graphiti.exporter.svg.configurationSVGElement&quot;&gt;
+ &lt;configurator   class=&quot;es.com.upm.graphiti.exporter.svg.DecoratorConfigurationSVGElement&quot;   diagramTypeID=&quot;testtool.sketch&quot;&gt;
+ &lt;/configurator&gt;
+&lt;/extension&gt;
       </documentation>
    </annotation>
 
-   <annotation>
-      <appinfo>
-         <meta.section type="apiinfo"/>
-      </appinfo>
-      <documentation>
-         [Enter API information here.]
-      </documentation>
-   </annotation>
 
    <annotation>
       <appinfo>
          <meta.section type="implementation"/>
       </appinfo>
       <documentation>
-         [Enter information about supplied implementation of this extension point.]
+         More information at: https://github.com/centeropenmiddleware/graphitiSVGExporter
       </documentation>
    </annotation>
 
+   <annotation>
+      <appinfo>
+         <meta.section type="copyright"/>
+      </appinfo>
+      <documentation>
+         Copyright 2013 Universidad Politécnica de Madrid - Center for Open Middleware (http://www.centeropenmiddleware.com).
+All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html.
+      </documentation>
+   </annotation>
 
 </schema>

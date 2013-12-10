@@ -132,7 +132,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	/**
 	 * Identification for the diagram Type.
 	 */
-	private String diagramTypeId;
+	protected String diagramTypeId;
 	/**
 	 * Extended Constructor from SVGGraphics2D
 	 * @param domFactory - Factory which will produce Elements for the DOM tree this Graphics2D generates.
@@ -169,7 +169,6 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 		if (ic !=  null) {
 			icse = ic;
 		}
-		setDOMGroupManager(getDOMGroupManager(this.gc, this.domTreeManager, ctx));
 	}
 	/**
 	 * Analyze the elements included in Diagram in order to paint them into Graphics.
@@ -239,7 +238,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 * @param c - Connection to be painted.
 	 * @param checkStyles - boolean to check styles recursively.
 	 */
-	private void paint(Connection c, boolean checkStyles) {
+	public void paint(Connection c, boolean checkStyles) {
 		connection.clear();
 		if (c instanceof FreeFormConnection) {
 			paint((FreeFormConnection)c, checkStyles);
@@ -257,7 +256,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 * @param ffc - FreeFormConnection to be painted.
 	 * @param checkStyles - boolean to check styles recursively.
 	 */
-	private void paint(FreeFormConnection ffc, boolean checkStyles) {
+	protected void paint(FreeFormConnection ffc, boolean checkStyles) {
 		GraphicsAlgorithm ga = ffc.getGraphicsAlgorithm();
 		int x = 0;
 		int y = 0;
@@ -332,7 +331,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 * @param theta - double Angle to locate the list of ConnectionDecorator.
 	 * @param checkStyles - boolean to check styles recursively.
 	 */
-	private void paintConnectionDecorators(Connection c, double theta, boolean checkStyles) {
+	protected void paintConnectionDecorators(Connection c, double theta, boolean checkStyles) {
 		List<ConnectionDecorator> cDeco = c.getConnectionDecorators();
 		Iterator<ConnectionDecorator> itcd = cDeco.iterator();
 		while (itcd.hasNext()) {
@@ -356,7 +355,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 * @param mc - ManhattanConnection to be painted.
 	 * @param checkStyles - boolean to check styles recursively.
 	 */
-	private void paint(ManhattanConnection mc, boolean checkStyles) {
+	protected void paint(ManhattanConnection mc, boolean checkStyles) {
 		createPoints(mc);
 		paintGraphicsAlgorithm(mc.getGraphicsAlgorithm(), checkStyles);
 		paintConnectionDecorators(mc, 0d, checkStyles);
@@ -491,7 +490,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 * @param cc - CurvedConnection to be painted.
 	 * @param checkStyles - boolean to check styles recursively.
 	 */
-	private void paint(CurvedConnection cc, boolean checkStyles) {
+	protected void paint(CurvedConnection cc, boolean checkStyles) {
 		GraphicsAlgorithm ga = cc.getGraphicsAlgorithm();
 		if (createPoints(cc, cc.getStart(), cc.getEnd()))
 			paintGraphicsAlgorithm(ga, checkStyles);
@@ -582,7 +581,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 * @param cc - CompositeConnection to be painted.
 	 * @param checkStyles - boolean to check styles recursively.
 	 */
-	public void paint(CompositeConnection cc, boolean checkStyles) {
+	protected void paint(CompositeConnection cc, boolean checkStyles) {
 		for(CurvedConnection child :cc.getChildren()) {
 			GraphicsAlgorithm ga = child.getGraphicsAlgorithm();
 			if (createPoints(child, cc.getStart(), cc.getEnd()))
@@ -599,7 +598,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 *  	- less parameters.
 	 * @param diagram - Diagram which Grid has to be painted.
 	 */
-	protected void paintDefaultGrid(Diagram diagram) {
+	public void paintDefaultGrid(Diagram diagram) {
 		GraphicsAlgorithm graphicsAlgorithm = diagram.getGraphicsAlgorithm();
 		java.awt.Rectangle clip = new java.awt.Rectangle(
 				graphicsAlgorithm.getWidth(), graphicsAlgorithm.getHeight());
@@ -638,7 +637,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 * @param s - Shape to be painted.
 	 * @param checkStyles - boolean to check styles recursively.
 	 */
-	protected void paint(Shape s, boolean checkStyles) {
+	public void paint(Shape s, boolean checkStyles) {
 		GraphicsAlgorithm ga = s.getGraphicsAlgorithm();
 		List<Anchor> anchors = s.getAnchors();
 		Iterator<Anchor> itg = anchors.iterator();
@@ -672,7 +671,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 * @param checkStyles - boolean to check styles recursively.
 	 * @return boolean to check.
 	 */
-	protected boolean paintGraphicsAlgorithm(GraphicsAlgorithm ga, boolean checkStyles) {
+	public boolean paintGraphicsAlgorithm(GraphicsAlgorithm ga, boolean checkStyles) {
 		if (ga == null) {
 			return false;
 		}
@@ -736,7 +735,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 * @param rect - Rectangle to be painted.
 	 * @param checkStyles - boolean to check styles recursively.
 	 */
-	private void paint(Rectangle rect, boolean checkStyles) {
+	public void paint(Rectangle rect, boolean checkStyles) {
 		java.awt.Rectangle rectangle = new java.awt.Rectangle(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 		if (Graphiti.getGaService().isFilled(rect, checkStyles)) {
 			// It is needed to add twice the element while the fill and the stroke attributes have to be different.
@@ -758,7 +757,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 * @param rrect - RoundedRectangle to be painted.
 	 * @param checkStyles - boolean to check styles recursively.
 	 */
-	private void paint(RoundedRectangle rrect, boolean checkStyles) {
+	public void paint(RoundedRectangle rrect, boolean checkStyles) {
 		RoundRectangle2D.Float rrectangle = new RoundRectangle2D.Float(
 				rrect.getX(), rrect.getY(), rrect.getWidth(), rrect.getHeight(), rrect.getCornerWidth(), rrect.getCornerHeight());
 		if (Graphiti.getGaService().isFilled(rrect, checkStyles)) {
@@ -780,7 +779,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 * @param ell - Ellipse to be painted.
 	 * @param checkStyles - boolean to check styles recursively.
 	 */
-	private void paint(Ellipse ell, boolean checkStyles) {
+	public void paint(Ellipse ell, boolean checkStyles) {
 		if (Graphiti.getGaService().isFilled(ell, checkStyles))  {
 			// It is needed to add twice the element while the fill and the stroke attributes have to be different.
 			if (ell.getStyle() == null) {
@@ -800,7 +799,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 * @param text - AbstractText to be painted.
 	 * @param checkStyles - boolean to check styles recursively.
 	 */
-	private void paint(AbstractText text, boolean checkStyles) {
+	public void paint(AbstractText text, boolean checkStyles) {
 		rotate(Graphiti.getGaService().getAngle(text, checkStyles));
 		//Clip, Transform, Paint, Font and Composite
 		setFont(getFont(Graphiti.getGaService().getFont(text, checkStyles)));
@@ -869,7 +868,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 * @param text - MultiText to be painted.
 	 * @param checkStyles - boolean to check styles recursively.
 	 */
-	private void paint(MultiText text, boolean checkStyles) {
+	public void paint(MultiText text, boolean checkStyles) {
 		rotate(Graphiti.getGaService().getAngle(text, checkStyles));
 		//Clip, Transform, Paint, Font and Composite
 		String title = text.getValue();
@@ -900,7 +899,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 * @param polAsPath - boolean to check if Polygon is painted as a Path or as a java.AWT.Polygon.
 	 * @param checkStyles - boolean to check styles recursively.
 	 */
-	private void paint(Polygon pol, boolean polAsPath, boolean checkStyles) {
+	public void paint(Polygon pol, boolean polAsPath, boolean checkStyles) {
 		if (polAsPath) {
 			GeneralPath path = new GeneralPath();
 			List<Point> points = AwtService.toAbsoluteCoordinates(pol);
@@ -946,7 +945,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 * @param polAsPath - boolean to check if Polygon is painted as a Path or as a simple Polyline.
 	 * @param checkStyles - boolean to check styles recursively.
 	 */
-	private void paint(Polyline pol, boolean polAsPath, boolean checkStyles) {
+	public void paint(Polyline pol, boolean polAsPath, boolean checkStyles) {
 		if (polAsPath) {
 			List<Point> points = AwtService.toAbsoluteCoordinates(pol);
 			GeneralPath path = new GeneralPath();
@@ -993,7 +992,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 * @param im - Image to be painted.
 	 * @param checkStyles - boolean to check styles recursively.
 	 */
-	private void paint(Image im, boolean checkStyles) {
+	public void paint(Image im, boolean checkStyles) {
 		if (im.getId() != null) {
 			java.awt.Image image = AwtService.getImage(diagramTypeId, im.getId());
 			if (image != null) {
@@ -1008,7 +1007,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 * @param checkStyles - boolean to check styles recursively.
 	 * This method use a class that is private in Graphiti. It should be made public in order for getting this exporter to work.
 	 */
-	private void paint(PlatformGraphicsAlgorithm pga, boolean checkStyles) {
+	public void paint(PlatformGraphicsAlgorithm pga, boolean checkStyles) {
 		String providerId = ExtensionManager.getSingleton().getDiagramTypeProviderId(diagramTypeId);
 		IDiagramTypeProvider dtp = ExtensionManager.getSingleton().createDiagramTypeProvider(providerId);
 		IGraphicsAlgorithmRendererFactory garf = dtp.getGraphicsAlgorithmRendererFactory();
@@ -1050,7 +1049,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 * @param ga - GraphicsAlgorithm 
 	 * @param checkStyles 
 	 */
-	private Stroke createStroke(GraphicsAlgorithm ga, boolean checkStyles) {
+	protected Stroke createStroke(GraphicsAlgorithm ga, boolean checkStyles) {
 		int lineWidth = Graphiti.getGaService().getLineWidth(ga, checkStyles);
 		
 		// line style
@@ -1114,7 +1113,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 	 * @param checkStyles - boolean to check styles recursively.
 	 * @return
 	 */
-	private TexturePaint createTextureStyle(GraphicsAlgorithm ga, boolean checkStyles) {
+	protected TexturePaint createTextureStyle(GraphicsAlgorithm ga, boolean checkStyles) {
 		try {
 			RenderingStyle rs = Graphiti.getGaService().getRenderingStyle(ga, checkStyles);
 			AdaptedGradientColoredAreas adaptedGradientColoredAreas = rs.getAdaptedGradientColoredAreas();
