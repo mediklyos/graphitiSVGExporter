@@ -1374,7 +1374,7 @@ public class DiagramGraphicsAdaptor extends SVGGraphics2D {
 					e.printStackTrace();
 				}
 			}
-			icse = DefaultConfigurationSVGElement.DEFCONF;
+			icse = DecoratorConfigurationSVGElement.DECCONF;
 		}
 		return icse;
 	}
